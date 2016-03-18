@@ -15,8 +15,10 @@ app.get('*', function(req, res) {
     res.sendFile(__dirname + req.url)
 });
 
-http.createServer(app).listen(3333);
-console.log("Express server listening on port 3333");
+http.createServer(app).listen(3333, function () {
+    console.log("Express server listening on port 3333");
+});
+
 
 
 /**
@@ -32,7 +34,7 @@ var screenShot = function () {
         if(err){
             return console.log(err);
         }
-        console.log('cut done');
+        console.log((new Date).toLocaleTimeString() + ' | cut done');
     })
 }
 screenShot();

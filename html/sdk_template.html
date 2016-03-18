@@ -125,7 +125,7 @@
         <div class="bg"></div>
         <div class="content">
             <div class="score">
-                2.3
+                <span id="score"></span>
                 <div class="star">
                     <div class="cover">
                         <img src="../assets/images/star_t.png" />
@@ -144,9 +144,10 @@
 </body>
 <script>
 
-    star(2.4)
-    function star(width) {
-        query('.cover').style.width = Math.round(width) * 24 + (width - Math.round(width)) * 16 + 'px'    
+    star(4.5)
+    function star(score) {
+        query('#score').innerHTML = score;
+        query('.cover').style.width = Math.floor(score) * 24 + (score - Math.floor(score)) * 16 + 'px'    
     }
     function query(s) {
         return document.querySelector(s)
