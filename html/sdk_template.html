@@ -49,9 +49,17 @@
         position: absolute;
         left: 0;
         top: 0;
-        width: 50%;
-        height: 100%;
-        background: url("../assets/images/big.png") center no-repeat;
+        width: 44%;
+        height: 92%;
+        margin-top: 2%;
+        margin-left: 1%;
+        
+        text-align: center;
+        /* background: url("../assets/images/big.png") center no-repeat; */
+    }
+    .bg img {
+        max-width: 100%;
+        max-height: 100%;
     }
     .content {
         margin: 50px 40px 40px 388px;
@@ -122,7 +130,9 @@
 <body>
     <section class="wrap">
         <span class="free">FREE</span>
-        <div class="bg"></div>
+        <div class="bg">
+            <img src="../assets/images/big.png">
+        </div>
         <div class="content">
             <div class="score">
                 <span id="score"></span>
@@ -153,5 +163,5 @@
         return document.querySelector(s)
     }
 </script>
-<script src="../AutoReloader.js"></script>
+<!-- <script src="../AutoReloader.js"></script> -->
 </html>
