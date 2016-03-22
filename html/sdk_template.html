@@ -25,7 +25,7 @@
         position: relative;
         font-family: "Roboto", Arial, '微软雅黑', sans-serif;
         color: #444;
-        /* background-image: url('../assets/images/bg.png');  */
+        /* background-image: url('../assets/images/bg2.png');  */
         background-color: white;
     }
     .free {
@@ -49,13 +49,11 @@
         position: absolute;
         left: 0;
         top: 0;
-        width: 44%;
-        height: 92%;
-        margin-top: 2%;
-        margin-left: 1%;
+        width: 50%;
+        height: 100%;
         
         text-align: center;
-        /* background: url("../assets/images/big.png") center no-repeat; */
+        background: url("../assets/images/big2.png") center bottom no-repeat;
     }
     .bg img {
         max-width: 100%;
@@ -125,13 +123,22 @@
         left: -2px;
         top: -2px;
     }
+    .img-wrap {
+        background: url('../assets/images/img.png') no-repeat;
+        background-size: cover;
+        height: 100%;
+        margin: 0 0 0 0;
+    }
 </style>
 
 <body>
     <section class="wrap">
         <span class="free">FREE</span>
         <div class="bg">
-            <img src="../assets/images/big.png">
+            <div class="img-wrap">
+                
+            </div>
+            <!-- <img src="../assets/images/big.png"> -->
         </div>
         <div class="content">
             <div class="score">
@@ -153,8 +160,7 @@
     </section>
 </body>
 <script>
-
-    star(4.5)
+    star(4.5);
     function star(score) {
         query('#score').innerHTML = score;
         query('.cover').style.width = Math.floor(score) * 24 + (score - Math.floor(score)) * 16 + 'px'    
