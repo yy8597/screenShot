@@ -31,7 +31,7 @@ http.createServer(app).listen(3333, function () {
 
 var exec = require('child_process').exec
 var script = __dirname + '/rasterize.js'
-var cmd = ['phantomjs', script, 'http://localhost:3333'];
+var cmd = ['phantomjs', script, 'http://localhost:3333/2'];
 cmd = cmd.join(' ');
 var screenShot = function () {
 console.log(cmd);
