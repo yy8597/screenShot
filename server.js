@@ -7,8 +7,12 @@ var http = require('http');
 var app = express();
 
 
-app.get('/', function(req, res) {
+app.get('/1', function(req, res) {
     res.sendFile(__dirname + '/html/sdk_template.html')
+});
+
+app.get('/2', function(req, res) {
+    res.sendFile(__dirname + '/html/sdk_template_1.html')
 });
 
 app.get('*', function(req, res) {
@@ -30,9 +34,10 @@ var script = __dirname + '/rasterize.js'
 var cmd = ['phantomjs', script, 'http://localhost:3333'];
 cmd = cmd.join(' ');
 var screenShot = function () {
+console.log(cmd);
     exec(cmd, function callback(err){
         if(err){
-            return console.log(err);
+            return console.log('screenShot > ',err);
         }
         console.log((new Date).toLocaleTimeString() + ' | cut done');
     })

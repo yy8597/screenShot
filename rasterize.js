@@ -2,6 +2,8 @@ var page = require('webpage').create()
     system = require('system')
   , url = system.args[1]
 
+  console.log('>>>', url);
+
 //viewportSize being the actual size of the headless browser
 page.viewportSize = { width: 1024, height: 768 };
 //the clipRect is the portion of the page you are taking a screenshot of

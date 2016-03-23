@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500' rel='stylesheet' type='text/css'>
+    <title>Document</title>
+</head>
+<style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        background: black;
+    }
+    .wrap {
+        width: 720px;
+        height: 380px;
+        overflow: hidden;
+        font-size: 13px;
+        font-weight: 300;
+        /* background: white; */
+        /* border: 4px solid red; */
+        position: relative;
+        font-family: "Roboto", Arial, '微软雅黑', sans-serif;
+        color: #444;
+        background: url('../assets/images_1/bg.png'); 
+        background-color: white;
+        background-size: 100% 100%;
+    }
+    .img-wrap {
+        position: absolute;
+        right: 140px;
+        bottom: 0;
+        width: 210px;
+        height: 342px;
+    }
+    .big-img {
+        position: relative;
+        z-index: 99;
+        width: 210px;
+        height: 342px;
+        background: url('../assets/images_1/mobile_bg.png');
+    }
+    .big-img img {
+        position: absolute;
+        bottom: 0;
+        left: 13px;
+    }
+    .img-wrap .img2,
+    .img-wrap .img3 { 
+        position: absolute;
+        bottom: 0;
+    }
+    .img-wrap .img2 {
+        left: -100px;
+    }
+
+    .img-wrap .img3 {
+        left: 125px;
+    }
+    .star {
+        
+        width: 135px;
+        height: 18px;
+        background: url('../assets/images_1/star_b.png') no-repeat;
+        background-size: 100% 100%;
+        display: inline-block;
+        position: relative;
+        margin: 5px 0 15px;
+    }
+    .star .cover {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    .star .cover img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 135px;
+    }
+    #score {
+        font-size: 72px;
+        font-weight: 100;
+        color: #fff;
+    }
+    .left {
+        text-align: center;
+        width: 200px;
+        left: 35px;
+        top: 130px;
+        position: absolute;
+    }
+</style>
+
+<body>
+    <section class="wrap">
+        <div class="img-wrap">
+            <div class="big-img">
+                <img src="../assets/images_1/img1.png" alt="">
+            </div>
+            <img class="img2" src="../assets/images_1/img2.png" alt="">
+            <img class="img3" src="../assets/images_1/img3.png" alt="">
+        </div>
+        <div class="left">
+            <div id="score"></div>
+            <div class="star">
+                <div class="cover">
+                    <img src="../assets/images_1/star.png" />
+                </div>
+            </div>
+            <img src="../assets/images_1/btn.png" alt="">
+        </div>
+    </section>
+</body>
+<script>
+    star('4.0');
+    function star(score) {
+        query('#score').innerHTML = score;
+        query('.cover').style.width = Math.floor(score) * 29 + (score - Math.floor(score)) * 18 + 'px'    
+    }
+    function query(s) {
+        return document.querySelector(s)
+    }
+</script>
+<script src="../AutoReloader.js"></script>
+</html>

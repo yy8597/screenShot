@@ -11,7 +11,7 @@
     {path: location.href, lastModified: null}
   ];
 
-  var INTERVAL = 1000;
+  var INTERVAL = 500;
   var WATCH_MAX_TIME = 1000 * 60 * 20;//watching 3 minutes
   var counter = 0;
   var isBusy = false;
