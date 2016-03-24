@@ -20,6 +20,7 @@
         overflow: hidden;
         font-size: 13px;
         font-weight: 300;
+        
         /* background: white; */
         /* border: 4px solid red; */
         position: relative;
@@ -32,21 +33,34 @@
     .img-wrap {
         position: absolute;
         right: 140px;
-        bottom: 0;
         width: 210px;
-        height: 342px;
+        bottom: -4px;
     }
     .big-img {
         position: relative;
         z-index: 99;
-        width: 210px;
-        height: 342px;
+        overflow: hidden;
+        /* width: 184px; */
+        /* height: 342px; */
+        background: url('../assets/images_1/mobile_bg.png');
+        padding-top: 39px;
+    }
+    .big-img-bg {
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9998;
         background: url('../assets/images_1/mobile_bg.png');
     }
     .big-img img {
-        position: absolute;
+        position: relative;
         bottom: 0;
         left: 13px;
+        width: 184px;
+        z-index: 99999;
+        max-height: 300px;
     }
     .img-wrap .img2,
     .img-wrap .img3 { 
@@ -58,7 +72,7 @@
     }
 
     .img-wrap .img3 {
-        left: 125px;
+        right: -100px;
     }
     .star {
         
@@ -102,6 +116,7 @@
     <section class="wrap">
         <div class="img-wrap">
             <div class="big-img">
+                <div class="big-img-bg"></div>
                 <img src="../assets/images_1/img1.png" alt="">
             </div>
             <img class="img2" src="../assets/images_1/img2.png" alt="">

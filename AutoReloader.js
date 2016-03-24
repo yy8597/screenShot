@@ -128,6 +128,8 @@
           } else {
             TARGET_FILES[index].lastModified = fileLastModified;
           }
+        }else{
+            stopPolling();
         }
       }
       isBusy = false;
@@ -193,5 +195,7 @@
   };
 
   //begin polling
-  polling();
+  if(location.host) {
+      polling();
+  }
 })();
