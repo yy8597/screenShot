@@ -7,23 +7,20 @@ var http = require('http');
 var app = express();
 
 
-app.get('/1', function(req, res) {
-    res.sendFile(__dirname + '/html/sdk_template.html')
-});
-
-app.get('/2', function(req, res) {
-    res.sendFile(__dirname + '/html/sdk_template_1.html')
+app.get('/assets/*', function(req, res) {
+    res.sendFile(__dirname + req.url)
 });
 
 app.get('*', function(req, res) {
-    res.sendFile(__dirname + req.url)
+    res.sendFile(__dirname + '/html' + req.url)
 });
+
 
 http.createServer(app).listen(3333, function () {
     console.log("Express server listening on port 3333");
 });
 
-
+return;
 
 /**
  * screen shot
