@@ -1,0 +1,42 @@
+<style>
+    .star-wrap {
+        display: inline-block;
+        position: relative;
+        top: -3px;
+        text-align: left;
+    }
+    .star-wrap img {
+        color: #FBD0A6;
+        margin-right:1px;
+        width: 10px;
+    }
+    .star-cover {
+        position: absolute;
+        left: 0;
+        top: 0;
+        overflow: hidden;
+    }
+    .star-inner {
+        display: block; 
+        width: 200px;
+    }
+    .star-wrap > img {
+        opacity: .35;
+    }
+
+    .star-cover .icon-starf{
+        color: #F0962D;
+    }
+</style>
+
+<script>
+// TODO: 用background-repeat做
+function renderStar(star, p) {
+    return '<span class="star-wrap">' +
+        star + star + star + star + star + 
+        '<span class="star star-cover" style="width: '+ (p/5 * 100) +'%"><span class="star-inner">' +
+            star + star + star + star + star + 
+        '</span></span>' +
+        '</span>'
+}
+</script>

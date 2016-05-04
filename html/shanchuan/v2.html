@@ -1,12 +1,13 @@
 <!doctype html>
 <html lang="en">
+<!-- sdk 1.01 -->
 <head>
     <script>
         pImg = 1/1.91;
-        PICTURE = "haixin_appwall/acl.jpg";
-        TITLE = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium beatae eligendi a saepe voluptatem! Veritatis fugiat cumque enim, deleniti quam tempore culpa, reprehenderit beatae sapiente ab, dicta vero adipisci harum!";
-        ICON = "http://gw.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png_80x80.jpg";
-        DESC = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium beatae eligendi a saepe voluptatem! Veritatis fugiat cumque enim, deleniti quam tempore culpa, reprehenderit beatae sapiente ab, dicta vero adipisci harum!";
+        PICTURE = "{IMG_320_167}";//haixin_appwall/acl.jpg
+        TITLE = "{TITLE}";
+        ICON = "{ICON}"; //"http://gw.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png_80x80.jpg";
+        DESC = "Installs : {DOWNLOAD}";//"{DESC}";
         BUTTON = "INSTALL";
         function WRITE (s) {document.write(s)};
 
@@ -15,16 +16,23 @@
     </script>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500">
+    
     <style>
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v15/CrYjSnGjrRCn0pd9VQsnFOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
+    }
+
     html, body{
         width: 100%;
         margin: 0;
         font-size : 75%;/* 12px; */
-        font-family: Roboto, helvetica, arial, sans-serif;
+        font-family: Roboto, helvetica, sans-serif;
         overflow: hidden;
-        opacity: 1;
-        -webkit-font-smoothing: subpixel-antialiased;
+        /* opacity: 1; */
+        /* -webkit-font-smoothing: subpixel-antialiased; */
     }
     a {
         text-decoration: none;
@@ -47,9 +55,21 @@
         padding-bottom: 53%;
         background-position: center;
         background-size:cover;
+        overflow: hidden;
+        position: relative;
     }
-    section .bg img {
-        width: 100%;
+    section .bg:before {
+        position: absolute;
+        /* left: -22px;
+        top: -16px; */
+        content: 'AD';
+        background: #F3F3F3;
+        color: gainsboro;
+        font-size: 12px;
+        padding:20px 16px 0px; 
+        -webkit-transform: rotate(-45deg) translate(-5px, -28px);
+        transform: rotate(-45deg) translate(-5px, -28px);
+        display:block;
     }
     section .close {
         position: absolute;
@@ -89,13 +109,6 @@
         -webkit-transform: rotate(-45deg);
         left: 10%;
     }*/
-    section .tag {
-        position: absolute;
-        top:.4rem;
-        left: .4rem;
-        color: #fff;
-        opacity: .6;
-    }
     footer {
         height: 8.333rem; /* 100dp */
         position: relative;
@@ -112,6 +125,7 @@
         display: block;
         overflow: hidden;
         color: rgba(0, 0, 0, .54);
+        font-size: 1.6em;
     }
     footer img {
         position: absolute;
@@ -120,16 +134,15 @@
         z-index: 10;
         width: 3.333rem; /*40dp*/
         height: 3.333rem; /*40dp*/
-        -webkit-border-radius: .2rem;
-        border-radius: .2rem;
+        /* -webkit-border-radius: .2rem;
+        border-radius: .2rem; */
     }
     footer h1 {
         display: block;
-        height: 2.4rem;
-        line-height: 2.4rem;
+        height: 2.2rem;
+        line-height: 2.2rem;
         font-weight: normal;
-        font-size: 2rem;
-        color: rgba(0, 0, 0, .87);
+        
         margin: 0;
         padding: 0;
 
@@ -139,15 +152,14 @@
         overflow: hidden;
     }
     footer h1 a {
-        color: #444;
-        text-decoration: none;
-        font-size: 1em;
-        font-weight: normal;
+        color: rgba(0, 0, 0, .87);
+        font-size: 1.6em;
     }
     .button {
         position: absolute;
         display: inline-block;
-        font-weight: 600;
+        font-weight: bold;
+        /* font-weight: 600; */
         bottom: .666rem; /*8dp*/ 
         left: 1rem; /*12dp*/
         right: 1rem;
@@ -160,10 +172,9 @@
         background: #2BAF2B;
         color: white;
         text-decoration: none;
-        z-index: 20;
-        -webkit-border-radius: .2rem;
-        border-radius: .2rem;
-        letter-spacing: 1px;
+        -webkit-border-radius: .4rem;
+        border-radius: .4rem;
+        /* letter-spacing: 1px; */
     }
     .cover {
         position: absolute;
@@ -198,7 +209,6 @@
         transform: translate(-50%, -50%) rotate(0deg) ;
         -webkit-transform: translate(-50%, -50%) rotate(0deg) ;
 
-
         animation: spin .5s infinite linear;
         -webkit-animation: spin .5s infinite linear;
     }
@@ -217,8 +227,6 @@
         border-radius:50%;
         -webkit-border-radius: 50%;
         border-radius: 50%;
-
-        
     }
 
     /*
@@ -304,7 +312,6 @@
     <section>
         <a href="javascript:;" class="bg"></a>
         <a href="javascript:;" class="close"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAaZJREFUWAntl7GNhDAQRc3dNUANIBEQUwMkNLIVEF5ECdQCFRAQIqogoIQ7faQ5eS1jz+BdCZ2YALPg+X7+jC1vVNf1j7pQfFyIZUe5gXxf5HbofzqU57lvYt73XA1vDZVlqdq2VY/HwzvoUQfkQgNavvjMsuz7qBNm1TSNiqJIpWmq4jhW0zQddbc+B0xVVbtGURRqnme1rqu1Lx46HVqWRQ3D8JcMYYlTBEMC0IKmK5wOIRGOwBk4hOA6ZcL0fa+6rts1XBcvEJKlUGdhMBYLSAIVAiMC4kCFwmCML1wkQXWAAkdQa95za2YX0S5iIOS6oPD+LAxyncseHY4CUBjYjBAYaJ0GMkFe9fs0kFnABCTdPCmP2lNAJgw+k/75QqDERW2DoSLHLGnVUau/IxdcLXtjhIgPRrqj28DYQD4YEg+FYgFxYV4B5QWSwoRCOVcZDmj6KU+66ZmbJ7R8R1mnQzjZbdumcNLD4Uq6YuAW1VSSJHv+OI5korWNOP/tMSvfSc+qrj3karCANN233zpr6O2jWwa4gSymPD26HXqyw/Ljcg79AjBG4XATYytfAAAAAElFTkSuQmCC" /></a>
-        <!-- <span class="tag">AdChoices</span> -->
         <footer>
             <a class="icon" href="javascript:;"><script>WRITE("<img src="+ICON+" class=icon />")</script></a>
             <h1><a href="javascript:;" class="title"><script>WRITE(TITLE)</script></a></h1>
@@ -336,6 +343,7 @@ window.Event = {
     var html = query("html");
     var win = window;
     var dpr = win.devicePixelRatio || 1;
+    var c = 'className';
     // fontSize(dpr * 12);
 
 
@@ -366,22 +374,23 @@ window.Event = {
         // }
     }
     show();
-    if(!window.YMJsObject) {
-        window.YMJsObject = {
-            onViewClosed : function(a) {
-                console.log("close");
-            },
-            onViewClicked : function (arg) {
-                console.log("click", arg);
-            }
-        }
-    }
+    // if(!window.YMJsObject) {
+    //     window.YMJsObject = {
+    //         onViewClosed : function(a) {
+    //             console.log("close");
+    //         },
+    //         onViewClicked : function (arg) {
+    //             console.log("click", arg);
+    //         }
+    //     }
+    // }
     
     var emitEvent = function (type) {
         return type 
             ? function (e) {
                 e.stopPropagation();     
-                setTimeout(showRelease, 50);
+                // setTimeout(showRelease, 50);
+                showRelease();
                 window.YMJsObject.onViewClicked(type);
             } 
             : function (e) {
@@ -392,17 +401,17 @@ window.Event = {
     }
 
     var bindEvent = function(selector, arg){
-        document.querySelector(selector).addEventListener("click", emitEvent(arg), false)
+        query(selector).addEventListener("click", emitEvent(arg), false)
     }
 
     var showRelease = function () {
         cover.style.height = html.getBoundingClientRect().height + 'px';
-        cover.className += " fade-in"
+        cover[c] += " fade-in"
     } 
 
     Event.on("onLastUrl", function () {
         // console.log.apply(console, slice.call(arguments));
-        cover.className = cover.className.replace(new RegExp("\\s?fade-in", "g"), "");
+        cover[c] = cover[c].replace(" fade-in", "");
     })
 
     // cover.addEventListener("click", function () {
@@ -418,5 +427,5 @@ window.Event = {
 
 })(window);
 </script>
-<script src="AutoReloader.js"></script>
+
 </html>
