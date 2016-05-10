@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500' rel='stylesheet' type='text/css'> -->
+    <title>Document</title>
+</head>
+<style type="text/css">
+@font-face {
+    font-family: 'icomoon';
+    src:
+        url('fonts/icomoon.ttf') format('truetype'),
+        url('fonts/icomoon.woff') format('woff'),
+        url('fonts/icomoon.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-heartf:before {
+    content: "\2665";
+}
+.icon-starf:before {
+    content: "\f02a";
+}
+
+
+
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        background: white;
+        font-family: "Roboto", Arial, '微软雅黑', sans-serif;
+        color: #444;
+        font-size: 14px;
+    }
+    figure {
+        width: 100%;
+        height: 0;
+        padding-bottom: 117%;
+        overflow: hidden;
+        position: relative;
+        background-image: url('img.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+    figure img{
+        /* position: absolute; */
+        width: 100%;
+        float: left;
+        /* height: 100%; */
+    }
+    figure .like{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        height: 46px;
+        line-height: 46px;
+        z-index: 20;
+        text-align: right;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 0 10px;
+        color: white;
+    }
+    figure .like:before {
+        content: ' ';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: white;
+        opacity: .5;
+        left: 0;
+    }
+    figure .like .content {
+        position: relative;
+        z-index:20;
+    }
+    .icon.icon-heartf {
+        font-size:22px;
+        display: inline;
+        vertical-align: middle;
+        position: relative;
+        /* top: px; */
+        color: #CC542C;
+    }
+    .main {
+        padding: 2rem 1.6rem 2rem 8.0rem;
+        position: relative;
+        background: #FDFEFF;
+    }
+
+    .main img {
+        width: 90px;
+        border-radius: 20px;
+        position: absolute;
+        left:20px;
+        top:20px;
+    }
+    h1 {
+        font-size: 18px;
+        padding-bottom: 10px;
+        white-space:nowrap;
+    }
+    .small {
+        color: #999;
+        font-size: 12px;
+    }
+    .flag {
+        position: relative;
+        background: -webkit-linear-gradient(#70C98A, #73CA8C); /* Safari 5.1 - 6.0 */
+        background: linear-gradient(#70C98A, #73CA8C); /* 标准的语法 */
+        color: #fff;
+        font-weight: normal;
+        font-size: 12px;
+        padding: 4px 18px 4px 8px;
+        overflow: hidden;
+        top: -2px;
+    }
+    .flag:after {
+        display: block;
+        content: ' ';
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        position: absolute;
+        right: -12px;
+        top: 1px;
+        transform: rotate(45deg) skew(10deg, 10deg);
+        -webkit-transform: rotate(45deg) skew(10deg, 10deg);
+    }
+    @media screen and (max-width: 320px) {
+        .main {
+            padding: 12px 12px 12px 90px;
+        }
+        .main img {
+            width: 70px;
+            border-radius: 20px;
+            position: absolute;
+            left:10px;
+            top:10px;
+        }
+    }
+
+</style>
+
+<body>
+    <section class="wrap">
+        <figure>
+                <!-- <img src="img.jpg" alt=""> -->
+                <div class="like">
+                    <div class="content">
+                        <span class="icon icon-heartf"></span>&nbsp;&nbsp;<span>345</span>&nbsp;&nbsp;Like
+                    </div>
+                </div>
+        </figure>
+        <div class="main">
+            <img src="http://images.apple.com/autopush/cn/itunes/charts/paid-apps/images/2016/3/16ef147255d45b727d9535dd2e562d958b5ca6be1281e17a8ded6d49a7369e9a.jpg" alt="">  
+            <h1>Angry Birds Free <span class="flag">game</span></h1>
+            <span class="small">Simple and smooth interface makes shareing files easy than ever</span>
+        </div>
+        
+    </section>
+</body>
+<script>
+    // star('4.0');
+    function star(score) {
+        query('#score').innerHTML = score;
+        query('.cover').style.width = Math.floor(score) * 29 + (score - Math.floor(score)) * 18 + 'px'    
+    }
+    function query(s) {
+        return document.querySelector(s)
+    }
+</script>
+<script src="../AutoReloader.js"></script>
+</html>

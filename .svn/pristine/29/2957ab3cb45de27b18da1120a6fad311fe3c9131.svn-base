@@ -1,0 +1,26 @@
+<style>
+    @font-face {
+        font-family: 'icomoon';
+        src:
+            url('http://admin.yeahmagic.com.s3.amazonaws.com/creatives/fonts/20160413_3317a708fe63857c7fd4bb7a1a558bbc.ttf') format('truetype'),
+            url('http://admin.yeahmagic.com.s3.amazonaws.com/creatives/fonts/20160413_85255f9706f48c086f2343b8837fcac0.woff') format('woff'),
+            url('http://admin.yeahmagic.com.s3.amazonaws.com/creatives/fonts/20160413_f78ef320f41ffce0308d6e5c41534ed3.svg') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    [class^="icon-"], [class*=" icon-"] {
+        /* use !important to prevent issues with browser extensions that change fonts */
+        font-family: 'icomoon' !important;
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+
+        /* Better Font Rendering =========== */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+</style>

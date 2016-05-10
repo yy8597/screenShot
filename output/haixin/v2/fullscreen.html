@@ -1,0 +1,494 @@
+<!doctype html>
+<!-- template info -->
+<!-- sdk 1.1 -->
+<head>
+<!-- start define -->
+<!-- <meta content="" /> -->
+<meta content="haixin/v2/fullscreen" />
+
+<!-- end define -->
+    <script>
+    
+        function WRITE (s) {document.write(s)};
+        function TJ (template) {
+            return function (param) {
+                return template.replace(new RegExp('\\{\\$.+?\\}', 'g'), function(m, code) {
+                    var ret = param[m.slice(2, m.length - 1)];
+                    return ret === undefined ? '' : ret;
+                });
+            }
+        }
+        var slice = Array.prototype.slice;
+        window.DEBUG = 0;
+        window.Event = {
+            emit: function (type) {
+                if(this[type]){
+                    this[type].apply(window, slice.call(arguments, 1));
+                }
+                else if(DEBUG) {
+                    alert("Event:" + type + " not found");
+                }
+            },
+            on: function (type, callback, content) {
+                this[type] = function() {
+                    callback.apply(content || window, slice.call(arguments));
+                }
+            }
+        }
+        function query(s) {
+            return document.querySelector(s);
+        }
+
+        var SDK = (function () {
+            var cover = document.createElement('div');
+            // var c = 'className';
+            cover.innerHTML = '<i class="spin"></i><span>Turning to GooglePlay</span>'
+            cover.className = 'cover';
+
+            var emitEvent = function (event, cb) {
+                var fn = function (a, b) {
+                    var len = arguments.length, J = 'YMJsObject';
+                    // 加延迟是防止android程序崩溃
+                    setTimeout(function () {
+                        // YMJsObject.writeLog('start emit: on' + event + ' ' + a + ' ' + b);
+                        // window.YMJsObject['on' + event](arg.toString());
+                        switch(len) {
+                            case 1:
+                                YMJsObject.writeLog('start emit: on' + event + ' ' + a);
+                                window[J]['on' + event](a);
+                                break;
+                            case 2:
+                                YMJsObject.writeLog('start emit: on' + event + ' ' + a + ' ' + b);
+                                window[J]['on' + event](a, b);
+                                break;
+                            default:
+                                YMJsObject.writeLog('start emit: on' + event);
+                                window[J]['on' + event]();
+                        }
+                    }, 100);
+                }
+                return function () {
+                    var self = this;
+                    // 加延迟是防止android程序崩溃
+                    // YMJsObject.writeLog('click')
+                    setTimeout(function () {
+                        // YMJsObject.writeLog('after timeout')
+                        cb.call(self, fn);
+                    }, 100);
+                }
+
+                /*return type 
+                    ? function (e) {
+                        e.stopPropagation();     
+                        showRelease();
+                        window.YMJsObject.onViewClicked(arg);
+                    } 
+                    : function (e) {
+                        e.stopPropagation();     
+                        window.YMJsObject.onViewClosed();
+                    }*/
+            }
+
+            var showRelease = function () {
+                // cover.style.height = html.getBoundingClientRect().height + 'px';
+                cover.style.display = 'block'
+                // cover[c] += " fade-in"
+            } 
+
+            Event.on("onLastUrl", function () {
+                // console.log.apply(console, slice.call(arguments));
+                // cover[c] = cover[c].replace(" fade-in", "");
+                cover.style.display = 'none'
+            })
+
+            var bindEmitEvent = function(selector, event, cb){
+                var ele = document.querySelectorAll(selector);
+                var i = ele.length;
+                while(i-- > 0) {
+                    ele[i].addEventListener('click', emitEvent(event, cb), false)
+                }
+            }
+            return {
+                init: function () {
+                    query('body').appendChild(cover);
+                },
+                bindEmitEvent: bindEmitEvent,
+                showLoading: showRelease
+            }
+        })();
+        
+        
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .single-line{
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .cover {
+            position: absolute;
+            z-index: 9999;
+            text-align: center;
+            display: none;
+            height: 100%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            /*transform: 1s ease-in;*/
+        }
+        .cover:before {
+            background: #000;
+            opacity: .7;
+            content: " ";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+        }
+         .cover .spin {
+            position: absolute;
+            z-index: 99999;
+            display: block;
+            width: 1.4rem;
+            height: 1.4rem;
+            top: 40%;
+            left: 50%;
+            padding: 1px;
+            opacity: .6;
+
+            /* transform: translate(-50%, -50%) rotate(0deg) ;
+            -webkit-transform: translate(-50%, -50%) rotate(0deg) ; */
+
+            animation: spin .5s infinite linear;
+            -webkit-animation: spin .5s infinite linear;
+        }
+
+        .cover .spin:after {
+            content: " ";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.4rem;
+            height: 1.4rem;
+            opacity: 1;
+            display: block;
+            border: 1px solid #fff;
+            border-bottom-color:transparent;
+            border-radius:50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+        
+        .cover span{
+            position: relative;
+            display: inline-block;
+            color: white;
+            top: 50%;
+            /* transform: translate(0, 20px); */
+            /* font-size: 14px; */
+            z-index: 99999;
+            font-size: 1em;
+            overflow: hidden;
+            padding: 10px 0;
+            opacity: .6;
+
+        }
+        /*
+        .cover span:before {
+            content: ";
+            position: absolute;
+            bottom:0;
+            width: 100%;
+            border-bottom: 1px solid #fff;
+            animation: release .5s linear .5s infinite;
+        }
+        .cover span:after {
+            content: ";
+            position: absolute;
+            bottom:0;
+            left: -120%;
+            width: 100%;
+            border-bottom: 1px solid #fff;
+            animation: release .5s linear .5s infinite;
+        }*/
+        
+        .fade-in {
+            display: block;
+            -webkit-animation: fadeIn .5s ease 0s 1;
+            animation: fadeIn .5s ease 0s 1;
+        }
+        @keyframes fadeIn {
+          0% {
+            opacity: 0;
+          }
+          100% {
+             opacity: 1;
+          }
+        }
+
+        /*@keyframes release {
+          0% {
+             transform: translate(0, 0);
+          }
+          90% {
+            transform: translate(120%, 0);
+          }
+          100% {
+             transform: translate(120%, 0);
+          }
+        }*/
+
+        @keyframes spin {
+          0% {
+            transform: translate(-50%, -50%) rotate(0deg) ;
+          }
+          100% {
+            transform: translate(-50%, -50%) rotate(359deg) ;
+          }
+        }
+        @-webkit-keyframes spin {
+          0% {
+            -webkit-transform: translate(-50%, -50%) rotate(0deg) ;
+          }
+          100% {
+            -webkit-transform: translate(-50%, -50%) rotate(359deg) ;
+          }
+        }
+    </style>
+
+<!-- start header -->
+<script>
+    pImg = 1/1.91;
+
+    
+    function render() {
+        var html = '';
+        try {
+            html = TJ([
+                '<figure style="background-image:url({$picture})">',
+                    '<span class="flag"><span>game</span>',
+                    '</span>',
+                    '</figure>',
+                    '<div class="main">',
+                        '<img src="{$icon}">',
+                        '<h1 class="single-line">{$title}</h1>',
+                        '<span class="small">{$desc}</span>',
+                '</div>'
+            ].join(''))({
+                title: '{TITLE}',
+                desc: '{DESC}',
+                icon: '{ICON}',
+                picture: '{IMG_320_167}'
+            });
+        } catch(e) {
+            html = '<div style="color:transparent">' + e + '</div>';
+        }
+        
+        return html
+    }
+    
+</script>
+
+<style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        background: white;
+        font-family: "Roboto", Arial, '微软雅黑', sans-serif;
+        color: #444;
+        font-size: 14px;
+    }
+    figure {
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%;
+        overflow: hidden;
+        position: relative;
+        background-image: url('/assets/angry-birds.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+    figure img{
+        /* position: absolute; */
+        width: 100%;
+        float: left;
+        /* height: 100%; */
+    }
+    figure .like{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        height: 46px;
+        line-height: 46px;
+        z-index: 20;
+        text-align: right;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 0 10px;
+        color: white;
+    }
+    figure .like:before {
+        content: ' ';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: white;
+        opacity: .5;
+        left: 0;
+    }
+    figure .like .content {
+        position: relative;
+        z-index:20;
+    }
+    .icon.icon-heartf {
+        font-size:22px;
+        display: inline;
+        vertical-align: middle;
+        position: relative;
+        /* top: px; */
+        color: #CC542C;
+    }
+    .main {
+        padding: 1.6rem 1.6rem 1.4rem 6.6rem;
+        position: relative;
+        background: #FDFEFF;
+    }
+
+    .main img {
+        width: 72px;
+        height: 72px;
+        border-radius: 8px;
+        position: absolute;
+        left:18px;
+        top:20px;
+    }
+    h1 {
+        font-size: 22px;
+        padding-bottom: 6px;
+        line-height: 18px;
+        width: 90%;
+    }
+    .small {
+        color: #999;
+        font-size: 14px;
+        line-height: 18px;
+        display: block;
+        overflow: hidden;
+        height: 36px;
+    }
+    .flag {
+        position: absolute;
+        left: 0;
+        top: 20px;
+        background: -webkit-linear-gradient(#70C98A, #73CA8C); /* Safari 5.1 - 6.0 */
+        background: linear-gradient(#70C98A, #73CA8C); /* 标准的语法 */
+        color: #fff;
+        font-weight: normal;
+        font-size: 12px;
+        padding: 4px 8px 4px 8px;
+    }
+    .flag:after,
+    .flag:before {
+        display: block;
+        content: ' ';
+        width: 20px;
+        height: 100%;
+        background: -webkit-linear-gradient(#70C98A, #73CA8C); /* Safari 5.1 - 6.0 */
+        background: linear-gradient(#70C98A, #73CA8C); /* 标准的语法 */
+        position: absolute;
+        right: 0px;
+        top: 0px;
+    }
+    .flag:after {
+        transform: skew(45deg, 0deg);
+        -webkit-transform: skew(45deg, 0deg);
+    }
+    .flag:before {
+        
+        transform: skew(-45deg, 0deg);
+        -webkit-transform: skew(-45deg, 0deg);
+    }
+    .flag span {
+        position: relative;
+        z-index: 100;
+    }
+    @media screen and (max-width: 320px) {
+        .main {
+            padding: 12px 12px 12px 90px;
+        }
+        .main img {
+            width: 70px;
+            border-radius: 20px;
+            position: absolute;
+            left:10px;
+            top:10px;
+        }
+    }
+
+
+/* body {
+    background: url('/bg/haixin/01.jpg');
+    background-size: cover;
+    background-position: 0 -48px;
+}
+
+.wrap {
+    opacity: 1;
+} */
+</style>
+
+<!-- end header -->
+    
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+</head>
+<body>
+<!-- @@var foo -->
+<!-- start body -->
+<section id="wrap" class="wrap">
+    <script>WRITE(render())</script>
+</section>
+
+<!-- end body -->
+</body>
+
+<!-- start footer -->
+<script>
+
+    bg = query("figure")
+    window.addEventListener("resize", show)
+    function show() {
+        bg.style.paddingBottom = pImg * 100 + "%";
+    }
+    show();
+
+    SDK.init();
+    SDK.bindEmitEvent('#wrap', 'ViewClicked', function (action) {
+        var s = '{IS_SHELTER}';
+        if(s == '1') {
+            SDK.showLoading();
+        }
+        // sdk1.1中，ViewClicked 方法需要两个参数，第一个为0代表使用默认广告
+        action('{AD_ID}', s);
+    });
+</script>
+
+<!-- dev tools -->
+
+<!-- end footer -->
+<!-- dev tools -->
+</html>

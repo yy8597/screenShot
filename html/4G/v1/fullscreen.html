@@ -1,0 +1,243 @@
+<!-- @@master  = ../../master.html -->
+<!-- @@block = define -->
+<!-- <meta content="" /> -->
+<!-- @@close-->
+<!-- sdk 1.01 -->
+
+<!-- @@block = header -->
+    <script>
+        pImg = 1/1.91;
+        PICTURE = "{PICTURE}";
+        DESC = "{TITLE}";
+        ICON = "{ICON}";
+        BUTTON = "PLAY";
+        function WRITE (s) {document.write(s)};
+
+        WRITE("<style>section .bg{background:url(" + PICTURE + ")}</style>");
+        WRITE("<title>"+DESC+"</title>")
+    </script>
+    
+    <style>
+    html, body{
+        width: 100%;
+        margin: 0;
+        font-size : 24px;
+        font-family: helvetica, arial, sans-serif;
+        overflow: hidden;
+        opacity: 1;
+    }
+    a {
+        text-decoration: none;
+        color: #333;
+    }
+    section {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        font-size: 1em;
+        background-color: #FAFAFA;
+    }
+    section .bg {
+        display: block;
+        position: absolute;
+        width: 100%;
+        padding-bottom: 53%;
+        background-position: center;
+        background-size:cover;
+    }
+    section .bg img {
+        width: 100%;
+    }
+    section .close {
+        position: absolute;
+        z-index: 20;
+        right: 0;
+        top: 0;
+        width: 1rem;
+        height: 1rem;
+    }
+    section .close img {
+        float: left;
+        width: 100%;
+    }
+    /*section .close:before {
+        display: block;
+        content: ";
+        height: 0px;
+        position: absolute;
+        margin: 0 auto;
+        top: .7rem;
+        width: 80%;
+        border-top: 2px solid #fff;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        left: 10%;
+    }
+    section .close:after {
+        display: block;
+        content: ";
+        height: 0px;
+        position: absolute;
+        margin: 0 auto;
+        top: .7rem;
+        width: 80%;
+        border-top: 2px solid #fff;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        left: 10%;
+    }*/
+    section .tag {
+        position: absolute;
+        top:.2rem;
+        left: .2rem;
+        color: #fff;
+        opacity: .6;
+    }
+    footer {
+        height: 2.2rem;
+        position: relative;
+        /*bottom: 0;*/
+        width: 100%;
+        color: #333;
+        z-index: 100;
+    }
+    footer .from {
+        position: absolute;
+        bottom:.333rem; /*8dp*/
+        left: .5rem; /*12dp*/
+        z-index: 10;
+        color: rgba(0,0,0, .54);
+        font-size: .5rem;
+    }
+    footer img {
+        position: absolute;
+        left: .5rem; /*12dp*/
+        top: -.416rem; /*10dp*/
+        z-index: 10;
+        width:2rem; /*48dp*/
+        height:2rem; /*48dp*/
+    }
+    footer h1 {
+        display: block;
+        position: absolute;
+        z-index: 10;
+        left: 3rem;
+        top: .5rem;
+        padding: 0;
+        /*margin:  1rem 11rem 0 6rem;*/
+        width: 55%;
+        margin: 0;
+        height: 1.25rem;
+        line-height: 1rem;
+        font-size: 1rem;
+        overflow: hidden;
+    }
+    footer h1 a {
+        color: #444;
+        text-decoration: none;
+        font-size: .6rem;
+        font-weight: normal;
+        width: 100%;
+    }
+    footer:after {
+        content: " ";
+        display: block;
+        height: 100%;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: #eee;
+        opacity: 1;
+        z-index: 1;
+    }
+    .button {
+        position: absolute;
+        display: inline-block;
+        font-weight: 600;
+        top: .333rem; /*8dp*/ 
+        right: .5rem; /*12dp*/
+        height: 1.25rem; /*32dp*/
+        padding: 0 .8rem;
+        box-shadow: 0 .05rem .05rem rgba(0,0,0,0.1);
+        font-size: .5rem;
+        line-height: 1.25rem;
+        width: auto;
+        display: block;
+        text-align: center;
+        background: #2BAF2B;
+        color: white;
+        text-decoration: none;
+        z-index: 20;
+        -webkit-border-radius: .1rem;
+        border-radius: .1rem;
+    }
+
+    @media screen and (max-width: 320px) {
+        footer h1 { 
+            width: 45%;
+        }
+    }
+</style>
+<!-- @@close-->
+
+<!-- @@block = body -->
+    <section>
+        <a href="javascript:;" class="bg"></a>
+        <footer>
+            <a class="icon" href="javascript:;"><script>WRITE("<img src="+ICON+" class=icon />")</script></a>
+            <h1><a href="javascript:;" class="title single-line">{DESC}</a></h1>
+            <a class="button" href="javascript:;"><script>WRITE(BUTTON)</script></a>
+        </footer>
+    </section>
+</body>
+<!-- @@close-->
+
+
+<!-- @@block = footer -->
+<script>
+    var html = query("html");
+    var win = window;
+    var dpr = win.devicePixelRatio || 1;
+    // fontSize(dpr * 12);
+
+
+    function fontSize(s) {
+        html.style.fontSize = s + "px";
+    }
+
+    var body = query("body"),
+        bg = query(".bg")
+        foot = query("footer"),
+        
+    window.addEventListener("resize", show)
+    function show() {
+        // var height = body.clientWidth * (global.pContainer - global.pImg);
+        // console.log(height);
+        foot.style.marginTop = body.clientWidth * win.pImg + "px";
+        bg.style.paddingBottom = win.pImg * 100 + "%";
+        // if(targetHeight > 0) {
+        //     cover.style.height = targetHeight + "px";
+        // } else {
+        //     cover.style.height = 0;
+        // }
+    }
+    show();
+
+    SDK.init();
+    SDK.bindEmitEvent('section', 'ViewClicked', function (action) {
+        var adId = '{AD_ID}';
+        var is_shelter = '{IS_SHELTER}';
+        // YMJsObject.writeLog('real click event')
+        setTimeout(function () {
+            // YMJsObject.writeLog('after real click');
+            if(is_shelter == 1) {
+                SDK.showLoading();
+            }
+            // YMJsObject.writeLog('after loading');
+            action(adId.toString(), is_shelter.toString());
+        }, 100)
+        
+    });
+</script>
+
+<!-- @@close-->

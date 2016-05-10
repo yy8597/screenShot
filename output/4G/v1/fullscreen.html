@@ -1,0 +1,515 @@
+<!doctype html>
+<!-- template info -->
+<!-- sdk 1.1 -->
+<head>
+<!-- start define -->
+<!-- <meta content="" /> -->
+
+<!-- end define -->
+    <script>
+    
+        function WRITE (s) {document.write(s)};
+        function TJ (template) {
+            return function (param) {
+                return template.replace(new RegExp('\\{\\$.+?\\}', 'g'), function(m, code) {
+                    var ret = param[m.slice(2, m.length - 1)];
+                    return ret === undefined ? '' : ret;
+                });
+            }
+        }
+        var slice = Array.prototype.slice;
+        window.DEBUG = 0;
+        window.Event = {
+            emit: function (type) {
+                if(this[type]){
+                    this[type].apply(window, slice.call(arguments, 1));
+                }
+                else if(DEBUG) {
+                    alert("Event:" + type + " not found");
+                }
+            },
+            on: function (type, callback, content) {
+                this[type] = function() {
+                    callback.apply(content || window, slice.call(arguments));
+                }
+            }
+        }
+        function query(s) {
+            return document.querySelector(s);
+        }
+
+        var SDK = (function () {
+            var cover = document.createElement('div');
+            // var c = 'className';
+            cover.innerHTML = '<i class="spin"></i><span>Turning to GooglePlay</span>'
+            cover.className = 'cover';
+
+            var emitEvent = function (event, cb) {
+                var fn = function (a, b) {
+                    var len = arguments.length, J = 'YMJsObject';
+                    // 加延迟是防止android程序崩溃
+                    setTimeout(function () {
+                        // YMJsObject.writeLog('start emit: on' + event + ' ' + a + ' ' + b);
+                        // window.YMJsObject['on' + event](arg.toString());
+                        switch(len) {
+                            case 1:
+                                YMJsObject.writeLog('start emit: on' + event + ' ' + a);
+                                window[J]['on' + event](a);
+                                break;
+                            case 2:
+                                YMJsObject.writeLog('start emit: on' + event + ' ' + a + ' ' + b);
+                                window[J]['on' + event](a, b);
+                                break;
+                            default:
+                                YMJsObject.writeLog('start emit: on' + event);
+                                window[J]['on' + event]();
+                        }
+                    }, 100);
+                }
+                return function () {
+                    var self = this;
+                    // 加延迟是防止android程序崩溃
+                    // YMJsObject.writeLog('click')
+                    setTimeout(function () {
+                        // YMJsObject.writeLog('after timeout')
+                        cb.call(self, fn);
+                    }, 100);
+                }
+
+                /*return type 
+                    ? function (e) {
+                        e.stopPropagation();     
+                        showRelease();
+                        window.YMJsObject.onViewClicked(arg);
+                    } 
+                    : function (e) {
+                        e.stopPropagation();     
+                        window.YMJsObject.onViewClosed();
+                    }*/
+            }
+
+            var showRelease = function () {
+                // cover.style.height = html.getBoundingClientRect().height + 'px';
+                cover.style.display = 'block'
+                // cover[c] += " fade-in"
+            } 
+
+            Event.on("onLastUrl", function () {
+                // console.log.apply(console, slice.call(arguments));
+                // cover[c] = cover[c].replace(" fade-in", "");
+                cover.style.display = 'none'
+            })
+
+            var bindEmitEvent = function(selector, event, cb){
+                var ele = document.querySelectorAll(selector);
+                var i = ele.length;
+                while(i-- > 0) {
+                    ele[i].addEventListener('click', emitEvent(event, cb), false)
+                }
+            }
+            return {
+                init: function () {
+                    query('body').appendChild(cover);
+                },
+                bindEmitEvent: bindEmitEvent,
+                showLoading: showRelease
+            }
+        })();
+        
+        
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .single-line{
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .cover {
+            position: absolute;
+            z-index: 9999;
+            text-align: center;
+            display: none;
+            height: 100%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            /*transform: 1s ease-in;*/
+        }
+        .cover:before {
+            background: #000;
+            opacity: .7;
+            content: " ";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+        }
+         .cover .spin {
+            position: absolute;
+            z-index: 99999;
+            display: block;
+            width: 1.4rem;
+            height: 1.4rem;
+            top: 40%;
+            left: 50%;
+            padding: 1px;
+            opacity: .6;
+
+            /* transform: translate(-50%, -50%) rotate(0deg) ;
+            -webkit-transform: translate(-50%, -50%) rotate(0deg) ; */
+
+            animation: spin .5s infinite linear;
+            -webkit-animation: spin .5s infinite linear;
+        }
+
+        .cover .spin:after {
+            content: " ";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.4rem;
+            height: 1.4rem;
+            opacity: 1;
+            display: block;
+            border: 1px solid #fff;
+            border-bottom-color:transparent;
+            border-radius:50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+        
+        .cover span{
+            position: relative;
+            display: inline-block;
+            color: white;
+            top: 50%;
+            /* transform: translate(0, 20px); */
+            /* font-size: 14px; */
+            z-index: 99999;
+            font-size: 1em;
+            overflow: hidden;
+            padding: 10px 0;
+            opacity: .6;
+
+        }
+        /*
+        .cover span:before {
+            content: ";
+            position: absolute;
+            bottom:0;
+            width: 100%;
+            border-bottom: 1px solid #fff;
+            animation: release .5s linear .5s infinite;
+        }
+        .cover span:after {
+            content: ";
+            position: absolute;
+            bottom:0;
+            left: -120%;
+            width: 100%;
+            border-bottom: 1px solid #fff;
+            animation: release .5s linear .5s infinite;
+        }*/
+        
+        .fade-in {
+            display: block;
+            -webkit-animation: fadeIn .5s ease 0s 1;
+            animation: fadeIn .5s ease 0s 1;
+        }
+        @keyframes fadeIn {
+          0% {
+            opacity: 0;
+          }
+          100% {
+             opacity: 1;
+          }
+        }
+
+        /*@keyframes release {
+          0% {
+             transform: translate(0, 0);
+          }
+          90% {
+            transform: translate(120%, 0);
+          }
+          100% {
+             transform: translate(120%, 0);
+          }
+        }*/
+
+        @keyframes spin {
+          0% {
+            transform: translate(-50%, -50%) rotate(0deg) ;
+          }
+          100% {
+            transform: translate(-50%, -50%) rotate(359deg) ;
+          }
+        }
+        @-webkit-keyframes spin {
+          0% {
+            -webkit-transform: translate(-50%, -50%) rotate(0deg) ;
+          }
+          100% {
+            -webkit-transform: translate(-50%, -50%) rotate(359deg) ;
+          }
+        }
+    </style>
+
+<!-- start header -->
+    <script>
+        pImg = 1/1.91;
+        PICTURE = "{PICTURE}";
+        DESC = "{TITLE}";
+        ICON = "{ICON}";
+        BUTTON = "PLAY";
+        function WRITE (s) {document.write(s)};
+
+        WRITE("<style>section .bg{background:url(" + PICTURE + ")}</style>");
+        WRITE("<title>"+DESC+"</title>")
+    </script>
+    
+    <style>
+    html, body{
+        width: 100%;
+        margin: 0;
+        font-size : 24px;
+        font-family: helvetica, arial, sans-serif;
+        overflow: hidden;
+        opacity: 1;
+    }
+    a {
+        text-decoration: none;
+        color: #333;
+    }
+    section {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        font-size: 1em;
+        background-color: #FAFAFA;
+    }
+    section .bg {
+        display: block;
+        position: absolute;
+        width: 100%;
+        padding-bottom: 53%;
+        background-position: center;
+        background-size:cover;
+    }
+    section .bg img {
+        width: 100%;
+    }
+    section .close {
+        position: absolute;
+        z-index: 20;
+        right: 0;
+        top: 0;
+        width: 1rem;
+        height: 1rem;
+    }
+    section .close img {
+        float: left;
+        width: 100%;
+    }
+    /*section .close:before {
+        display: block;
+        content: ";
+        height: 0px;
+        position: absolute;
+        margin: 0 auto;
+        top: .7rem;
+        width: 80%;
+        border-top: 2px solid #fff;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        left: 10%;
+    }
+    section .close:after {
+        display: block;
+        content: ";
+        height: 0px;
+        position: absolute;
+        margin: 0 auto;
+        top: .7rem;
+        width: 80%;
+        border-top: 2px solid #fff;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        left: 10%;
+    }*/
+    section .tag {
+        position: absolute;
+        top:.2rem;
+        left: .2rem;
+        color: #fff;
+        opacity: .6;
+    }
+    footer {
+        height: 2.2rem;
+        position: relative;
+        /*bottom: 0;*/
+        width: 100%;
+        color: #333;
+        z-index: 100;
+    }
+    footer .from {
+        position: absolute;
+        bottom:.333rem; /*8dp*/
+        left: .5rem; /*12dp*/
+        z-index: 10;
+        color: rgba(0,0,0, .54);
+        font-size: .5rem;
+    }
+    footer img {
+        position: absolute;
+        left: .5rem; /*12dp*/
+        top: -.416rem; /*10dp*/
+        z-index: 10;
+        width:2rem; /*48dp*/
+        height:2rem; /*48dp*/
+    }
+    footer h1 {
+        display: block;
+        position: absolute;
+        z-index: 10;
+        left: 3rem;
+        top: .5rem;
+        padding: 0;
+        /*margin:  1rem 11rem 0 6rem;*/
+        width: 55%;
+        margin: 0;
+        height: 1.25rem;
+        line-height: 1rem;
+        font-size: 1rem;
+        overflow: hidden;
+    }
+    footer h1 a {
+        color: #444;
+        text-decoration: none;
+        font-size: .6rem;
+        font-weight: normal;
+        width: 100%;
+    }
+    footer:after {
+        content: " ";
+        display: block;
+        height: 100%;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: #eee;
+        opacity: 1;
+        z-index: 1;
+    }
+    .button {
+        position: absolute;
+        display: inline-block;
+        font-weight: 600;
+        top: .333rem; /*8dp*/ 
+        right: .5rem; /*12dp*/
+        height: 1.25rem; /*32dp*/
+        padding: 0 .8rem;
+        box-shadow: 0 .05rem .05rem rgba(0,0,0,0.1);
+        font-size: .5rem;
+        line-height: 1.25rem;
+        width: auto;
+        display: block;
+        text-align: center;
+        background: #2BAF2B;
+        color: white;
+        text-decoration: none;
+        z-index: 20;
+        -webkit-border-radius: .1rem;
+        border-radius: .1rem;
+    }
+
+    @media screen and (max-width: 320px) {
+        footer h1 { 
+            width: 45%;
+        }
+    }
+</style>
+
+<!-- end header -->
+    
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+</head>
+<body>
+<!-- @@var foo -->
+<!-- start body -->
+    <section>
+        <a href="javascript:;" class="bg"></a>
+        <footer>
+            <a class="icon" href="javascript:;"><script>WRITE("<img src="+ICON+" class=icon />")</script></a>
+            <h1><a href="javascript:;" class="title single-line">{DESC}</a></h1>
+            <a class="button" href="javascript:;"><script>WRITE(BUTTON)</script></a>
+        </footer>
+    </section>
+</body>
+
+<!-- end body -->
+</body>
+
+<!-- start footer -->
+<script>
+    var html = query("html");
+    var win = window;
+    var dpr = win.devicePixelRatio || 1;
+    // fontSize(dpr * 12);
+
+
+    function fontSize(s) {
+        html.style.fontSize = s + "px";
+    }
+
+    var body = query("body"),
+        bg = query(".bg")
+        foot = query("footer"),
+        
+    window.addEventListener("resize", show)
+    function show() {
+        // var height = body.clientWidth * (global.pContainer - global.pImg);
+        // console.log(height);
+        foot.style.marginTop = body.clientWidth * win.pImg + "px";
+        bg.style.paddingBottom = win.pImg * 100 + "%";
+        // if(targetHeight > 0) {
+        //     cover.style.height = targetHeight + "px";
+        // } else {
+        //     cover.style.height = 0;
+        // }
+    }
+    show();
+
+    SDK.init();
+    SDK.bindEmitEvent('section', 'ViewClicked', function (action) {
+        var adId = '{AD_ID}';
+        var is_shelter = '{IS_SHELTER}';
+        // YMJsObject.writeLog('real click event')
+        setTimeout(function () {
+            // YMJsObject.writeLog('after real click');
+            if(is_shelter == 1) {
+                SDK.showLoading();
+            }
+            // YMJsObject.writeLog('after loading');
+            action(adId.toString(), is_shelter.toString());
+        }, 100)
+        
+    });
+</script>
+
+
+<!-- end footer -->
+<!-- dev tools -->
+</html>

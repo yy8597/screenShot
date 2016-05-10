@@ -1,0 +1,221 @@
+<!-- @@master  = ../../master.html-->
+
+<!-- @@block = define-->
+<!-- <meta content="" /> -->
+<meta content="haixin/v2/fullscreen" />
+<!-- @@close-->
+
+<!-- @@block = header -->
+<script>
+    pImg = 1/1.91;
+
+    
+    function render() {
+        var html = '';
+        try {
+            html = TJ([
+                '<figure style="background-image:url({$picture})">',
+                    '<span class="flag"><span>game</span>',
+                    '</span>',
+                    '</figure>',
+                    '<div class="main">',
+                        '<img src="{$icon}">',
+                        '<h1 class="single-line">{$title}</h1>',
+                        '<span class="small">{$desc}</span>',
+                '</div>'
+            ].join(''))({
+                title: '{TITLE}',
+                desc: '{DESC}',
+                icon: '{ICON}',
+                picture: '{IMG_320_167}'
+            });
+        } catch(e) {
+            html = '<div style="color:transparent">' + e + '</div>';
+        }
+        
+        return html
+    }
+    
+</script>
+
+<style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        background: white;
+        font-family: "Roboto", Arial, '微软雅黑', sans-serif;
+        color: #444;
+        font-size: 14px;
+    }
+    figure {
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%;
+        overflow: hidden;
+        position: relative;
+        background-image: url('/assets/angry-birds.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+    figure img{
+        /* position: absolute; */
+        width: 100%;
+        float: left;
+        /* height: 100%; */
+    }
+    figure .like{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        height: 46px;
+        line-height: 46px;
+        z-index: 20;
+        text-align: right;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 0 10px;
+        color: white;
+    }
+    figure .like:before {
+        content: ' ';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: white;
+        opacity: .5;
+        left: 0;
+    }
+    figure .like .content {
+        position: relative;
+        z-index:20;
+    }
+    .icon.icon-heartf {
+        font-size:22px;
+        display: inline;
+        vertical-align: middle;
+        position: relative;
+        /* top: px; */
+        color: #CC542C;
+    }
+    .main {
+        padding: 1.6rem 1.6rem 1.4rem 6.6rem;
+        position: relative;
+        background: #FDFEFF;
+    }
+
+    .main img {
+        width: 72px;
+        border-radius: 8px;
+        position: absolute;
+        left:18px;
+        top:20px;
+    }
+    h1 {
+        font-size: 22px;
+        padding-bottom: 6px;
+        line-height: 18px;
+        width: 90%;
+    }
+    .small {
+        color: #999;
+        font-size: 14px;
+        line-height: 18px;
+        display: block;
+        overflow: hidden;
+        height: 36px;
+    }
+    .flag {
+        position: absolute;
+        left: 0;
+        top: 20px;
+        background: -webkit-linear-gradient(#70C98A, #73CA8C); /* Safari 5.1 - 6.0 */
+        background: linear-gradient(#70C98A, #73CA8C); /* 标准的语法 */
+        color: #fff;
+        font-weight: normal;
+        font-size: 12px;
+        padding: 4px 8px 4px 8px;
+    }
+    .flag:after,
+    .flag:before {
+        display: block;
+        content: ' ';
+        width: 20px;
+        height: 100%;
+        background: -webkit-linear-gradient(#70C98A, #73CA8C); /* Safari 5.1 - 6.0 */
+        background: linear-gradient(#70C98A, #73CA8C); /* 标准的语法 */
+        position: absolute;
+        right: 0px;
+        top: 0px;
+    }
+    .flag:after {
+        transform: skew(45deg, 0deg);
+        -webkit-transform: skew(45deg, 0deg);
+    }
+    .flag:before {
+        
+        transform: skew(-45deg, 0deg);
+        -webkit-transform: skew(-45deg, 0deg);
+    }
+    .flag span {
+        position: relative;
+        z-index: 100;
+    }
+    @media screen and (max-width: 320px) {
+        .main {
+            padding: 12px 12px 12px 90px;
+        }
+        .main img {
+            width: 70px;
+            border-radius: 20px;
+            position: absolute;
+            left:10px;
+            top:10px;
+        }
+    }
+
+
+/* body {
+    background: url('/bg/haixin/01.jpg');
+    background-size: cover;
+    background-position: 0 -48px;
+}
+
+.wrap {
+    opacity: 1;
+} */
+</style>
+<!-- @@close-->
+
+<!-- @@block = body -->
+<section id="wrap" class="wrap">
+    <script>WRITE(render())</script>
+</section>
+<!-- @@close-->
+
+<!-- @@block = footer -->
+<script>
+
+    bg = query("figure")
+    window.addEventListener("resize", show)
+    function show() {
+        bg.style.paddingBottom = pImg * 100 + "%";
+    }
+    show();
+
+    SDK.init();
+    SDK.bindEmitEvent('#wrap', 'ViewClicked', function (action) {
+        var s = '{IS_SHELTER}';
+        if(s == '1') {
+            SDK.showLoading();
+        }
+        // sdk1.1中，ViewClicked 方法需要两个参数，第一个为0代表使用默认广告
+        action('{AD_ID}', s);
+    });
+</script>
+
+<!-- dev tools -->
+<!-- @@close-->
+
